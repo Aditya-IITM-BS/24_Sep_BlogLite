@@ -1,3 +1,4 @@
+from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from flask_security import UserMixin, RoleMixin
 
@@ -21,3 +22,11 @@ class UserRoles(db.Model):
     id = db.Column(db.Integer, primary_key = True)
     user_id = db.Column(db.Integer, db.ForeignKey('user.id'))
     role_id = db.Column(db.Integer, db.ForeignKey('role.id'))
+
+class Blog(db.Model):
+    id = db.Column(db.Integer, primary_key = True)
+    title = db.Column(db.String)
+    caption = db.Column(db.String)
+    image_url = db.Column(db.String)
+    timestamp = db.Column(db.DateTime, index = True, default = datetime.now())
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'))

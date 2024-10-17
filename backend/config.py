@@ -10,4 +10,6 @@ class LocalDevelopmentConfig(Config):
     SECRET_KEY = "shouldbekeyveryhidden"
     SECURITY_TOKEN_AUTHENTICATION_HEADER = 'Authentication-Token'
 
+    
+
     WTF_CSRF_ENABLED = False

@@ -8,7 +8,9 @@ Flask-Login==0.6.3
 Flask-Principal==0.4.0
 Flask-RESTful==0.3.10
 Flask-Security-Too==5.5.2
+Flask-SQLAlchemy==3.1.1
 Flask-WTF==1.2.1
+greenlet==3.1.1
 idna==3.10
 importlib_resources==6.4.5
 itsdangerous==2.2.0
@@ -17,5 +19,7 @@ MarkupSafe==2.1.5
 passlib==1.7.4
 pytz==2024.2
 six==1.16.0
+SQLAlchemy==2.0.36
+typing_extensions==4.12.2
 Werkzeug==3.0.4
 WTForms==3.1.2

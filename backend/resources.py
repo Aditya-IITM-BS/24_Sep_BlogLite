@@ -1,8 +1,9 @@
-from flask import jsonify, request
+from flask import jsonify, request, current_app as app
 from flask_restful import Api, Resource, fields, marshal_with
 from flask_security import auth_required, current_user
 from backend.models import Blog, db
 
+cache = app.cache
 
 api = Api(prefix='/api')
 
@@ -17,8 +18,9 @@ blog_fields = {
 
 class BlogAPI(Resource):
 
-    @marshal_with(blog_fields)
     @auth_required('token')
+    @cache.memoize(timeout = 5)
+    @marshal_with(blog_fields)
     def get(self, blog_id):
         blog = Blog.query.get(blog_id)
 
@@ -44,8 +46,9 @@ class BlogAPI(Resource):
 
 class BlogListAPI(Resource):
 
-    @marshal_with(blog_fields)
     @auth_required('token')
+    @cache.cached(timeout = 5, key_prefix = "blog_list")
+    @marshal_with(blog_fields)
     def get(self ):
         blogs = Blog.query.all()
         return blogs

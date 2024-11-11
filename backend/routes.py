@@ -18,6 +18,9 @@ def celery():
     task = add.delay(10, 20)
     return {'task_id' : task.id}
 
+
+
+@auth_required('token') 
 @app.get('/get-csv/<id>')
 def getCSV(id):
     result = AsyncResult(id)
@@ -26,7 +29,8 @@ def getCSV(id):
         return send_file(f'./backend/celery/user-downloads/{result.result}'), 200
     else:
         return {'message' : 'task not ready'}, 405
-    
+
+@auth_required('token') 
 @app.get('/create-csv')
 def createCSV():
     task = create_csv.delay()

@@ -11,6 +11,7 @@ export default {
 
 
         <button class="btn btn-secondary" v-if="$store.state.loggedIn" @click="$store.commit('logout')">Logout</button>
+
     </div>
     `
 }

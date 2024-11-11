@@ -7,11 +7,15 @@ export default {
     `, 
     methods : {
         async create_csv(){
-            const res = await fetch(location.origin + '/create-csv')
+            const res = await fetch(location.origin + '/create-csv', {
+                headers : {
+                    'Authentication-Token' : this.$store.state.auth_token
+                }
+            })
             const task_id = (await res.json()).task_id
 
             const interval = setInterval(async() => {
-                const res = await fetch(`${location.origin}/get-csv/${task_id}`)
+                const res = await fetch(`${location.origin}/get-csv/${task_id}` )
                 if (res.ok){
                     console.log('data is ready')
                     window.open(`${location.origin}/get-csv/${task_id}`)

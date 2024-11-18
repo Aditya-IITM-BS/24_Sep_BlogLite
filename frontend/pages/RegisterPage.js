@@ -16,6 +16,7 @@ export default {
     },
     methods : {
         async submitLogin(){
+  
             const res = await fetch(location.origin+'/register', 
                 {method : 'POST', 
                     headers: {'Content-Type' : 'application/json'}, 

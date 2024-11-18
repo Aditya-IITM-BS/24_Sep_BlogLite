@@ -6,6 +6,7 @@ import BlogsListPage from "../pages/BlogsListPage.js";
 import DisplayBlogPage from "../pages/DisplayBlogPage.js";
 import LoginPage from "../pages/LoginPage.js";
 import RegisterPage from "../pages/RegisterPage.js";
+import ExploreUsersPage from "../pages/ExploreUsersPage.js";
 
 import store from './store.js'
 
@@ -17,6 +18,7 @@ const routes = [
     {path : '/feed', component : BlogsListPage, meta : {requiresLogin : true}},
     {path : '/blogs/:id', component : DisplayBlogPage, props : true, meta : {requiresLogin : true}},
     {path : '/admin-dashboard', component : AdminDashboardPage, meta : {requiresLogin : true, role : "admin"}},
+    {path : '/explore', component : ExploreUsersPage }
 ]
 
 const router = new VueRouter({

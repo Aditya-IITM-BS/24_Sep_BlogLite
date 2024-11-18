@@ -9,6 +9,7 @@ class LocalDevelopmentConfig(Config):
     SECURITY_PASSWORD_SALT = 'thisshouldbekeptsecret'
     SECRET_KEY = "shouldbekeyveryhidden"
     SECURITY_TOKEN_AUTHENTICATION_HEADER = 'Authentication-Token'
+    SECURITY_TOKEN_MAX_AGE = 3600
 
     # cache specific
     CACHE_TYPE =  "RedisCache"

@@ -1,6 +1,6 @@
 from flask import current_app as app, jsonify, render_template,  request, send_file
-from flask_security import auth_required, verify_password, hash_password
-from backend.models import db
+from flask_security import auth_required, verify_password, hash_password, current_user
+from backend.models import User, db
 from datetime import datetime
 from backend.celery.tasks import add, create_csv
 from celery.result import AsyncResult
@@ -90,3 +90,49 @@ def register():
     except:
         db.session.rollback()
         return jsonify({"message" : "error creating user"}), 400
+    
+
+
+@app.get('/follow/<int:id>')
+def follow(id):
+    followed_user = User.query.get_or_404(id)
+
+    if not followed_user:
+        return jsonify({'message' : "user doesn't exist"}), 404
+
+    if followed_user.id == current_user.id:
+        return jsonify({'message' : "cant follow yourself"}), 400
+
+    if followed_user in current_user.followed:
+        return jsonify({'message' : "already following"}), 400
+    
+    if followed_user.active == False:
+        return jsonify({'message' : "user is banned"}), 400
+    
+    current_user.followed.append(followed_user)
+    db.session.commit()
+
+    return jsonify({'message' : 'following user '}), 200
+
+
+
+@app.get('/unfollow/<int:id>')
+def unfollow(id):
+    followed_user = User.query.get_or_404(id)
+
+    if not followed_user:
+        return jsonify({'message' : "user doesn't exist"}), 404
+
+    if followed_user.id == current_user.id:
+        return jsonify({'message' : "cant un-follow yourself"}), 400
+
+    if followed_user not in current_user.followed:
+        return jsonify({'message' : "not following"}), 400
+    
+    if followed_user.active == False:
+        return jsonify({'message' : "user is banned"}), 400
+    
+    current_user.followed.remove(followed_user)
+    db.session.commit()
+
+    return jsonify({'message' : 'now un-followed'}), 200

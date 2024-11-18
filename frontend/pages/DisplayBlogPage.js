@@ -5,7 +5,7 @@ export default {
         <h1> {{blog.title}} </h1>
         <p> Published : {{formattedDate}} </p>
         <img width="150" v-bind:src="blog.image_url" />
-        <p> {{blog.caption}} </p>
+        <p v-html="blog.caption"></p>
     </div>
     `,
     data(){
